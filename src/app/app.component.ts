@@ -27,64 +27,12 @@ export class AppComponent implements OnInit {
       'subscription': new FormControl(null, Validators.required)
     }),
     '3': new FormGroup({
-      'cardnumber': new FormControl(null, Validators.required),
+      'cardnumber': new FormControl(null, [Validators.required, Validators.minLength(16), Validators.maxLength(16)]),
       'cardholder': new FormControl(null, Validators.required),
-      'expmonth': new FormControl(null, Validators.required),
-      'expyear': new FormControl(null, [Validators.required, Validators.min(this.year)]),
-      'cvv': new FormControl(null, Validators.required)
+      'expdate': new FormControl(null, [Validators.required, Validators.minLength(5), Validators.maxLength(5)]),
+      'cvc': new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(3)])
     })
   });
-  months: Array<any> = [
-    {
-      value: 'January',
-      id: 0
-    },
-    {
-      value: 'February',
-      id: 1
-    },
-    {
-      value: 'March',
-      id: 2
-    },
-    {
-      value: 'April',
-      id: 3
-    },
-    {
-      value: 'May',
-      id: 4
-    },
-    {
-      value: 'Juny',
-      id: 5
-    },
-    {
-      value: 'July',
-      id: 6
-    },
-    {
-      value: 'August',
-      id: 7
-    },
-    {
-      value: 'September',
-      id: 8
-    },
-    {
-      value: 'October',
-      id: 9
-    },
-    {
-      value: 'November',
-      id: 10
-    },
-    {
-      value: 'December',
-      id: 11
-    },
-  ]
-  error: string;
   onSubmit = () => {
     console.log(this.registration.value);
     this.registration.get('0').errors
@@ -94,8 +42,5 @@ export class AppComponent implements OnInit {
       
       return control.get('password').value != control.get('confirmPassword').value ? {'notMatch': true} : null;
     };
-  }
-  nesto = () => {
-    console.log(this.registration.get('0').errors);
   }
 }

@@ -58,16 +58,22 @@
       </mat-step>
       <mat-step label="Select package" formGroupName="2" [stepControl]="registration.get('2')">
         <mat-radio-group formControlName="subscription">
-          <div class="subscriptions">
-            FREE<br>
+          <div class="subscriptions free">
+            <div class="header">FREE <br> 0$</div>
+            <div class="body">Neki tekst malo veciNeki tekst malo veciNeki tekst malo veciNeki tekst malo veciNeki tekst
+              malo veciNeki tekst malo veci</div>
             <mat-radio-button value="1"></mat-radio-button>
           </div>
-          <div class="subscriptions">
-            BASIC<br>
+          <div class="subscriptions basic">
+            <div class="header">BASIC <br> 5$</div>
+            <div class="body">Neki tekst malo veciNeki tekst malo veciNeki tekst malo veciNeki tekst malo veciNeki tekst
+              malo veciNeki tekst malo veciNeki tekst malo veci</div>
             <mat-radio-button value="2"></mat-radio-button>
           </div>
-          <div class="subscriptions">
-            PRO<br>
+          <div class="subscriptions pro">
+            <div class="header">PRO <br> 8$</div>
+            <div class="body">Neki tekst malo veciNeki tekst malo veciNeki tekst malo veciNeki tekst malo veciNeki tekst
+              malo veciNeki tekst malo veciNeki tekst malo veci</div>
             <mat-radio-button value="3"></mat-radio-button>
           </div>
         </mat-radio-group>
@@ -77,52 +83,49 @@
         </div>
       </mat-step>
       <mat-step label="Payment information" formGroupName="3" [stepControl]="registration.get('3')">
-        <mat-form-field>
-          <input matInput placeholder="Card holder name" formControlName="cardholder">
-          <mat-error
-            *ngIf="registration.get('3').get('cardholder').errors && registration.get('3').get('cardholder').errors.required">
-            This field is required</mat-error>
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <input matInput placeholder="Card number" formControlName="cardnumber">
-          <mat-error
-            *ngIf="registration.get('3').get('cardnumber').errors && registration.get('3').get('cardnumber').errors.required">
-            This field is required</mat-error>
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <mat-label>
-            Select expiration month
-          </mat-label>
-          <mat-select formControlName="expmonth">
-            <mat-option *ngFor="let month of months" [value]="month.id">
-              {{month.value}}
-            </mat-option>
-          </mat-select>
-          <mat-error
-            *ngIf="registration.get('3').get('expmonth').errors && registration.get('3').get('expmonth').errors.required">
-            This field is required</mat-error>
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <mat-label>
-            Expiration year
-          </mat-label>
-          <input matInput type="number" value="year" formControlName="expyear">
-          <mat-error *ngIf="registration.get('3').get('expyear').errors && registration.get('3').get('expyear').errors.required">
-            This field is required
-          </mat-error>
-          <mat-error *ngIf="registration.get('3').get('expyear').errors && registration.get('3').get('expyear').errors.min">
-            Value can't be less then current year: {{year}}
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Security number(CVV)" formControlName="cvv">
-          <mat-error
-            *ngIf="registration.get('3').get('cvv').errors && registration.get('3').get('cvv').errors.required">This
-            field is required</mat-error>
-        </mat-form-field>
+        <div class="creditcard">
+          <mat-form-field>
+            <input matInput placeholder="Card holder name" formControlName="cardholder">
+            <mat-error
+              *ngIf="registration.get('3').get('cardholder').errors && registration.get('3').get('cardholder').errors.required">
+              This field is required</mat-error>
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <input matInput placeholder="Card number" formControlName="cardnumber">
+            <mat-error
+              *ngIf="registration.get('3').get('cardnumber').errors && registration.get('3').get('cardnumber').errors.required">
+              This field is required</mat-error>
+            <mat-error
+              *ngIf="registration.get('3').get('cardnumber').errors && (registration.get('3').get('cardnumber').errors.minlength || registration.get('3').get('cardnumber').errors.maxlength)">
+              Not a valid credit card number</mat-error>
+          </mat-form-field>
+          <br>
+          <mat-form-field class="half margin-cvv">
+            <mat-label>
+              Exp. date
+            </mat-label>
+            <input matInput type="text" formControlName="expdate">
+            <mat-hint> 03/20</mat-hint>
+            <mat-error
+              *ngIf="registration.get('3').get('expdate').errors && registration.get('3').get('expdate').errors.required">
+              This field is required
+            </mat-error>
+            <mat-error
+              *ngIf="registration.get('3').get('expdate').errors && (registration.get('3').get('expdate').errors.minlength || registration.get('3').get('expdate').errors.maxlength)">
+              Invalid date format, should be 03/20
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="half">
+            <input matInput placeholder="Security number(CVC)" formControlName="cvc">
+            <mat-error
+              *ngIf="registration.get('3').get('cvc').errors && registration.get('3').get('cvc').errors.required">This
+              field is required</mat-error>
+            <mat-error
+              *ngIf="registration.get('3').get('cvc').errors && (registration.get('3').get('cvc').errors.minlength || registration.get('3').get('cvc').errors.maxlength)">
+              CVC is 3 numbers long</mat-error>
+          </mat-form-field>
+        </div>
         <div>
           <button mat-button matStepperPrevious type="button">Back</button>
           <button mat-button type="submit" [disabled]="registration.valid == false">Submit</button>
@@ -187,20 +190,23 @@
       </mat-step>
       <mat-step label="Select package" formGroupName="2" [stepControl]="registration.get('2')">
         <mat-radio-group formControlName="subscription">
-          <div class="subscriptions">
-            FREE<br>
+          <div class="subscriptions free">
+            <div class="header">FREE <br> 0$</div>
+            <div class="body">Neki tekst malo veciNeki tekst malo veciNeki tekst malo veciNeki tekst malo veciNeki tekst
+              malo veciNeki tekst malo veci</div>
             <mat-radio-button value="1"></mat-radio-button>
-            <hr>
           </div>
-          <div class="subscriptions">
-            BASIC<br>
+          <div class="subscriptions basic">
+            <div class="header">BASIC <br> 5$</div>
+            <div class="body">Neki tekst malo veciNeki tekst malo veciNeki tekst malo veciNeki tekst malo veciNeki tekst
+              malo veciNeki tekst malo veciNeki tekst malo veci</div>
             <mat-radio-button value="2"></mat-radio-button>
-            <hr>
           </div>
-          <div class="subscriptions">
-            PRO<br>
+          <div class="subscriptions pro">
+            <div class="header">PRO <br> 8$</div>
+            <div class="body">Neki tekst malo veciNeki tekst malo veciNeki tekst malo veciNeki tekst malo veciNeki tekst
+              malo veciNeki tekst malo veciNeki tekst malo veci</div>
             <mat-radio-button value="3"></mat-radio-button>
-            <hr>
           </div>
         </mat-radio-group>
         <div>
@@ -209,52 +215,49 @@
         </div>
       </mat-step>
       <mat-step label="Payment information" formGroupName="3" [stepControl]="registration.get('3')">
-        <mat-form-field>
-          <input matInput placeholder="Card holder name" formControlName="cardholder">
-          <mat-error
-            *ngIf="registration.get('3').get('cardholder').errors && registration.get('3').get('cardholder').errors.required">
-            This field is required</mat-error>
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <input matInput placeholder="Card number" formControlName="cardnumber">
-          <mat-error
-            *ngIf="registration.get('3').get('cardnumber').errors && registration.get('3').get('cardnumber').errors.required">
-            This field is required</mat-error>
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <mat-label>
-            Select expiration month
-          </mat-label>
-          <mat-select formControlName="expmonth">
-            <mat-option *ngFor="let month of months" [value]="month.id">
-              {{month.value}}
-            </mat-option>
-          </mat-select>
-          <mat-error
-            *ngIf="registration.get('3').get('expmonth').errors && registration.get('3').get('expmonth').errors.required">
-            This field is required</mat-error>
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-          <mat-label>
-            Expiration year
-          </mat-label>
-          <input matInput type="number" value="year" formControlName="expyear">
-          <mat-error *ngIf="registration.get('3').get('expyear').errors && registration.get('3').get('expyear').errors.required">
-            This field is required
-          </mat-error>
-          <mat-error *ngIf="registration.get('3').get('expyear').errors && registration.get('3').get('expyear').errors.min">
-            Value can't be less then current year: {{year}}
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Security number(CVV)" formControlName="cvv">
-          <mat-error
-            *ngIf="registration.get('3').get('cvv').errors && registration.get('3').get('cvv').errors.required">This
-            field is required</mat-error>
-        </mat-form-field>
+        <div class="creditcard">
+          <mat-form-field>
+            <input matInput placeholder="Card holder name" formControlName="cardholder">
+            <mat-error
+              *ngIf="registration.get('3').get('cardholder').errors && registration.get('3').get('cardholder').errors.required">
+              This field is required</mat-error>
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <input matInput placeholder="Card number" formControlName="cardnumber">
+            <mat-error
+              *ngIf="registration.get('3').get('cardnumber').errors && registration.get('3').get('cardnumber').errors.required">
+              This field is required</mat-error>
+            <mat-error
+              *ngIf="registration.get('3').get('cardnumber').errors && (registration.get('3').get('cardnumber').errors.minlength || registration.get('3').get('cardnumber').errors.maxlength)">
+              Not a valid credit card number</mat-error>
+          </mat-form-field>
+          <br>
+          <mat-form-field class="half margin-cvv">
+            <mat-label>
+              Exp. date
+            </mat-label>
+            <input matInput type="text" formControlName="expdate">
+            <mat-hint> 03/20</mat-hint>
+            <mat-error
+              *ngIf="registration.get('3').get('expdate').errors && registration.get('3').get('expdate').errors.required">
+              This field is required
+            </mat-error>
+            <mat-error
+              *ngIf="registration.get('3').get('expdate').errors && (registration.get('3').get('expdate').errors.minlength || registration.get('3').get('expdate').errors.maxlength)">
+              Invalid date format, should be 03/20
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="half">
+            <input matInput placeholder="Security number(CVC)" formControlName="cvc">
+            <mat-error
+              *ngIf="registration.get('3').get('cvc').errors && registration.get('3').get('cvc').errors.required">This
+              field is required</mat-error>
+            <mat-error
+              *ngIf="registration.get('3').get('cvc').errors && (registration.get('3').get('cvc').errors.minlength || registration.get('3').get('cvc').errors.maxlength)">
+              CVC is 3 numbers long</mat-error>
+          </mat-form-field>
+        </div>
         <div>
           <button mat-button matStepperPrevious type="button">Back</button>
           <button mat-button type="submit" [disabled]="registration.valid == false">Submit</button>

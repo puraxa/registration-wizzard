@@ -19,6 +19,38 @@
     width: 100%;
     display: inline-block;
     text-align: center;
+    height: 300px;
+}
+.free {
+    background-color: lightgray;
+}
+.basic {
+    background-color: cornsilk;
+}
+.pro {
+    background-color: burlywood;
+}
+.header {
+    font-weight: bold;
+    font-size: 20px;
+    height: 80px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 40px;
+}
+.body {
+    padding: 10px;
+    height: 140px;
+    text-align: center;
+}
+.creditcard {
+    width: 100%;
+}
+.half {
+    width:49% !important;
+}
+.margin-cvv {
+    margin-right: 2%;
 }
 @media (min-width: 576px){
     .container {
@@ -28,9 +60,6 @@
         border-radius: 7px;
         padding: 10px;
     }
-    .mat-form-field{
-        width: 75%;
-    }
     .displayHorizontal {
         display: initial;
     }
@@ -38,11 +67,26 @@
         display: none;
     }
     .subscriptions {
-        width: 33.3%;
+        width: 30%;
+        height: 400px;
+        margin: 5px;
+    }
+    .body {
+        height: 240px;
+    }
+    .creditcard {
+        width: 75%;
     }
 }
 @media (min-width: 960px) {
     .container {
         width: 800px;
+    }
+    .subscriptions {
+        width: 31%;
+        height: 300px;
+    }
+    .body {
+        height: 140px;
     }
 }
