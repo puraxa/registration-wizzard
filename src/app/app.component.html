@@ -1,9 +1,9 @@
-<div class="container">
+<div class="container" *ngIf="registration">
   <form [formGroup]="registration" (ngSubmit)="onSubmit()">
     <mat-horizontal-stepper linear class="displayHorizontal">
       <mat-step label="Registration" formGroupName="0" [stepControl]="registration.get('0')">
         <mat-form-field>
-          <input matInput placeholder="Email" formControlName="email" [(ngModel)]="obj.email">
+          <input matInput placeholder="Email" formControlName="email">
           <mat-error
             *ngIf="registration.get('0').get('email').errors && registration.get('0').get('email').errors.email">Invalid
             email adress</mat-error>
@@ -25,9 +25,9 @@
             *ngIf="registration.get('0').get('confirmPassword').errors && registration.get('0').get('confirmPassword').errors.required">
             This field is required</mat-error>
         </mat-form-field>
-        <p *ngIf="error" style="color:red">{{error}}</p>
+        <p *ngIf="registration.get('0').errors" style="color:red">Passwords don't match</p>
         <div>
-          <button mat-button matStepperNext type="button" [disabled]="error">Next</button>
+          <button mat-button matStepperNext type="button">Next</button>
         </div>
       </mat-step>
       <mat-step label="Personal information" formGroupName="1" [stepControl]="registration.get('1')">
@@ -132,7 +132,7 @@
     <mat-vertical-stepper linear class="displayVertical">
       <mat-step label="Registration" formGroupName="0" [stepControl]="registration.get('0')">
         <mat-form-field>
-          <input matInput placeholder="Email" formControlName="email" [(ngModel)]="obj.email">
+          <input matInput placeholder="Email" formControlName="email">
           <mat-error
             *ngIf="registration.get('0').get('email').errors && registration.get('0').get('email').errors.email">Invalid
             email adress</mat-error>
@@ -154,9 +154,9 @@
             *ngIf="registration.get('0').get('confirmPassword').errors && registration.get('0').get('confirmPassword').errors.required">
             This field is required</mat-error>
         </mat-form-field>
-        <p *ngIf="error" style="color:red">{{error}}</p>
+        <p *ngIf="registration.get('0').errors" style="color:red">Passwords don't match</p>
         <div>
-          <button mat-button matStepperNext type="button" [disabled]="error">Next</button>
+          <button mat-button matStepperNext type="button">Next</button>
         </div>
       </mat-step>
       <mat-step label="Personal information" formGroupName="1" [stepControl]="registration.get('1')">

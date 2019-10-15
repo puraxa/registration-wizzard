@@ -8,76 +8,15 @@ import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from
 })
 export class AppComponent implements OnInit {
   ngOnInit() {
-    this.checkPw();
-  }
-  obj = {
-    email: '',
-    password: '',
-    confirmPassword: '',
-    firstName: '',
-    lastName: '',
-    phone: '',
-    subscription: '',
-    cardnumber: '',
-    cardholder: '',
   }
   year = new Date().getFullYear();
-  months: Array<any> = [
-    {
-      value: 'January',
-      id: 0
-    },
-    {
-      value: 'February',
-      id: 1
-    },
-    {
-      value: 'March',
-      id: 2
-    },
-    {
-      value: 'April',
-      id: 2
-    },
-    {
-      value: 'May',
-      id: 2
-    },
-    {
-      value: 'Juny',
-      id: 2
-    },
-    {
-      value: 'July',
-      id: 2
-    },
-    {
-      value: 'August',
-      id: 2
-    },
-    {
-      value: 'September',
-      id: 2
-    },
-    {
-      value: 'October',
-      id: 2
-    },
-    {
-      value: 'November',
-      id: 2
-    },
-    {
-      value: 'December',
-      id: 2
-    },
-  ]
-  error: string;
   registration = new FormGroup({
     '0': new FormGroup({
       'email': new FormControl(null, [Validators.required, Validators.email]),
       'password': new FormControl('', Validators.required),
       'confirmPassword': new FormControl('', Validators.required)
+    },{
+      validators: this.checkPassword()
     }),
     '1': new FormGroup({
       'firstname': new FormControl(null, Validators.required),
@@ -95,16 +34,68 @@ export class AppComponent implements OnInit {
       'cvv': new FormControl(null, Validators.required)
     })
   });
-  checkPw = () => {
-    this.registration.get('0').valueChanges.subscribe(values => {
-      if(values.confirmPassword.length > 1 && values.password != values.confirmPassword){
-        this.error = "Passwords don't match";
-      } else {
-        this.error = null;
-      }
-    })
-  }
+  months: Array<any> = [
+    {
+      value: 'January',
+      id: 0
+    },
+    {
+      value: 'February',
+      id: 1
+    },
+    {
+      value: 'March',
+      id: 2
+    },
+    {
+      value: 'April',
+      id: 3
+    },
+    {
+      value: 'May',
+      id: 4
+    },
+    {
+      value: 'Juny',
+      id: 5
+    },
+    {
+      value: 'July',
+      id: 6
+    },
+    {
+      value: 'August',
+      id: 7
+    },
+    {
+      value: 'September',
+      id: 8
+    },
+    {
+      value: 'October',
+      id: 9
+    },
+    {
+      value: 'November',
+      id: 10
+    },
+    {
+      value: 'December',
+      id: 11
+    },
+  ]
+  error: string;
   onSubmit = () => {
     console.log(this.registration.value);
+    this.registration.get('0').errors
+  }
+  checkPassword(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      
+      return control.get('password').value != control.get('confirmPassword').value ? {'notMatch': true} : null;
+    };
+  }
+  nesto = () => {
+    console.log(this.registration.get('0').errors);
   }
 }
