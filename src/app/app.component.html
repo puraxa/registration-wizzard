@@ -1,21 +1,265 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="container">
+  <form [formGroup]="registration" (ngSubmit)="onSubmit()">
+    <mat-horizontal-stepper linear class="displayHorizontal">
+      <mat-step label="Registration" formGroupName="0" [stepControl]="registration.get('0')">
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" [(ngModel)]="obj.email">
+          <mat-error
+            *ngIf="registration.get('0').get('email').errors && registration.get('0').get('email').errors.email">Invalid
+            email adress</mat-error>
+          <mat-error
+            *ngIf="registration.get('0').get('email').errors && registration.get('0').get('email').errors.required">This
+            field is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input matInput placeholder="Password" formControlName="password" type="password">
+          <mat-error
+            *ngIf="registration.get('0').get('password').errors && registration.get('0').get('password').errors.required">
+            This field is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input matInput placeholder="Confirm password" formControlName="confirmPassword" type="password">
+          <mat-error
+            *ngIf="registration.get('0').get('confirmPassword').errors && registration.get('0').get('confirmPassword').errors.required">
+            This field is required</mat-error>
+        </mat-form-field>
+        <p *ngIf="error" style="color:red">{{error}}</p>
+        <div>
+          <button mat-button matStepperNext type="button" [disabled]="error">Next</button>
+        </div>
+      </mat-step>
+      <mat-step label="Personal information" formGroupName="1" [stepControl]="registration.get('1')">
+        <mat-form-field>
+          <input matInput placeholder="First name" formControlName="firstname">
+          <mat-error
+            *ngIf="registration.get('1').get('firstname').errors && registration.get('1').get('firstname').errors.required">
+            This field is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input matInput placeholder="Last name" formControlName="lastname">
+          <mat-error
+            *ngIf="registration.get('1').get('lastname').errors && registration.get('1').get('lastname').errors.required">
+            This field is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input matInput placeholder="Phone" formControlName="phone">
+          <mat-error
+            *ngIf="registration.get('1').get('phone').errors && registration.get('1').get('phone').errors.required">This
+            field is required</mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious type="button">Back</button>
+          <button mat-button matStepperNext type="button">Next</button>
+        </div>
+      </mat-step>
+      <mat-step label="Select package" formGroupName="2" [stepControl]="registration.get('2')">
+        <mat-radio-group formControlName="subscription">
+          <div class="subscriptions">
+            FREE<br>
+            <mat-radio-button value="1"></mat-radio-button>
+          </div>
+          <div class="subscriptions">
+            BASIC<br>
+            <mat-radio-button value="2"></mat-radio-button>
+          </div>
+          <div class="subscriptions">
+            PRO<br>
+            <mat-radio-button value="3"></mat-radio-button>
+          </div>
+        </mat-radio-group>
+        <div>
+          <button mat-button matStepperPrevious type="button">Back</button>
+          <button mat-button matStepperNext type="button">Next</button>
+        </div>
+      </mat-step>
+      <mat-step label="Payment information" formGroupName="3" [stepControl]="registration.get('3')">
+        <mat-form-field>
+          <input matInput placeholder="Card holder name" formControlName="cardholder">
+          <mat-error
+            *ngIf="registration.get('3').get('cardholder').errors && registration.get('3').get('cardholder').errors.required">
+            This field is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input matInput placeholder="Card number" formControlName="cardnumber">
+          <mat-error
+            *ngIf="registration.get('3').get('cardnumber').errors && registration.get('3').get('cardnumber').errors.required">
+            This field is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>
+            Select expiration month
+          </mat-label>
+          <mat-select formControlName="expmonth">
+            <mat-option *ngFor="let month of months" [value]="month.id">
+              {{month.value}}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="registration.get('3').get('expmonth').errors && registration.get('3').get('expmonth').errors.required">
+            This field is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>
+            Expiration year
+          </mat-label>
+          <input matInput type="number" value="year" formControlName="expyear">
+          <mat-error *ngIf="registration.get('3').get('expyear').errors && registration.get('3').get('expyear').errors.required">
+            This field is required
+          </mat-error>
+          <mat-error *ngIf="registration.get('3').get('expyear').errors && registration.get('3').get('expyear').errors.min">
+            Value can't be less then current year: {{year}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Security number(CVV)" formControlName="cvv">
+          <mat-error
+            *ngIf="registration.get('3').get('cvv').errors && registration.get('3').get('cvv').errors.required">This
+            field is required</mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious type="button">Back</button>
+          <button mat-button type="submit" [disabled]="registration.valid == false">Submit</button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+    <mat-vertical-stepper linear class="displayVertical">
+      <mat-step label="Registration" formGroupName="0" [stepControl]="registration.get('0')">
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" [(ngModel)]="obj.email">
+          <mat-error
+            *ngIf="registration.get('0').get('email').errors && registration.get('0').get('email').errors.email">Invalid
+            email adress</mat-error>
+          <mat-error
+            *ngIf="registration.get('0').get('email').errors && registration.get('0').get('email').errors.required">This
+            field is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input matInput placeholder="Password" formControlName="password" type="password">
+          <mat-error
+            *ngIf="registration.get('0').get('password').errors && registration.get('0').get('password').errors.required">
+            This field is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input matInput placeholder="Confirm password" formControlName="confirmPassword" type="password">
+          <mat-error
+            *ngIf="registration.get('0').get('confirmPassword').errors && registration.get('0').get('confirmPassword').errors.required">
+            This field is required</mat-error>
+        </mat-form-field>
+        <p *ngIf="error" style="color:red">{{error}}</p>
+        <div>
+          <button mat-button matStepperNext type="button" [disabled]="error">Next</button>
+        </div>
+      </mat-step>
+      <mat-step label="Personal information" formGroupName="1" [stepControl]="registration.get('1')">
+        <mat-form-field>
+          <input matInput placeholder="First name" formControlName="firstname">
+          <mat-error
+            *ngIf="registration.get('1').get('firstname').errors && registration.get('1').get('firstname').errors.required">
+            This field is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input matInput placeholder="Last name" formControlName="lastname">
+          <mat-error
+            *ngIf="registration.get('1').get('lastname').errors && registration.get('1').get('lastname').errors.required">
+            This field is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input matInput placeholder="Phone" formControlName="phone">
+          <mat-error
+            *ngIf="registration.get('1').get('phone').errors && registration.get('1').get('phone').errors.required">This
+            field is required</mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious type="button">Back</button>
+          <button mat-button matStepperNext type="button">Next</button>
+        </div>
+      </mat-step>
+      <mat-step label="Select package" formGroupName="2" [stepControl]="registration.get('2')">
+        <mat-radio-group formControlName="subscription">
+          <div class="subscriptions">
+            FREE<br>
+            <mat-radio-button value="1"></mat-radio-button>
+            <hr>
+          </div>
+          <div class="subscriptions">
+            BASIC<br>
+            <mat-radio-button value="2"></mat-radio-button>
+            <hr>
+          </div>
+          <div class="subscriptions">
+            PRO<br>
+            <mat-radio-button value="3"></mat-radio-button>
+            <hr>
+          </div>
+        </mat-radio-group>
+        <div>
+          <button mat-button matStepperPrevious type="button">Back</button>
+          <button mat-button matStepperNext type="button">Next</button>
+        </div>
+      </mat-step>
+      <mat-step label="Payment information" formGroupName="3" [stepControl]="registration.get('3')">
+        <mat-form-field>
+          <input matInput placeholder="Card holder name" formControlName="cardholder">
+          <mat-error
+            *ngIf="registration.get('3').get('cardholder').errors && registration.get('3').get('cardholder').errors.required">
+            This field is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input matInput placeholder="Card number" formControlName="cardnumber">
+          <mat-error
+            *ngIf="registration.get('3').get('cardnumber').errors && registration.get('3').get('cardnumber').errors.required">
+            This field is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>
+            Select expiration month
+          </mat-label>
+          <mat-select formControlName="expmonth">
+            <mat-option *ngFor="let month of months" [value]="month.id">
+              {{month.value}}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="registration.get('3').get('expmonth').errors && registration.get('3').get('expmonth').errors.required">
+            This field is required</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>
+            Expiration year
+          </mat-label>
+          <input matInput type="number" value="year" formControlName="expyear">
+          <mat-error *ngIf="registration.get('3').get('expyear').errors && registration.get('3').get('expyear').errors.required">
+            This field is required
+          </mat-error>
+          <mat-error *ngIf="registration.get('3').get('expyear').errors && registration.get('3').get('expyear').errors.min">
+            Value can't be less then current year: {{year}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Security number(CVV)" formControlName="cvv">
+          <mat-error
+            *ngIf="registration.get('3').get('cvv').errors && registration.get('3').get('cvv').errors.required">This
+            field is required</mat-error>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious type="button">Back</button>
+          <button mat-button type="submit" [disabled]="registration.valid == false">Submit</button>
+        </div>
+      </mat-step>
+    </mat-vertical-stepper>
+  </form>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
-<router-outlet></router-outlet>

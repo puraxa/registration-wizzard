@@ -1,0 +1,48 @@
+.container {
+    width: 100%;
+    padding: 5px;
+}
+.displayHorizontal {
+    display: none;
+}
+.displayVertical {
+    display: initial;
+}
+.mat-form-field {
+    width: 100%;
+}
+.form {
+    width: 30%;
+    margin:auto;
+}
+.subscriptions {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+}
+@media (min-width: 576px){
+    .container {
+        width: 80%;
+        margin: auto;
+        border: solid 1px black;
+        border-radius: 7px;
+        padding: 10px;
+    }
+    .mat-form-field{
+        width: 75%;
+    }
+    .displayHorizontal {
+        display: initial;
+    }
+    .displayVertical {
+        display: none;
+    }
+    .subscriptions {
+        width: 33.3%;
+    }
+}
+@media (min-width: 960px) {
+    .container {
+        width: 800px;
+    }
+}
