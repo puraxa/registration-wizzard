@@ -12,14 +12,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio'; 
 import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 import {MatDatepickerModule} from '@angular/material/datepicker'; 
-import { MatNativeDateModule } from '@angular/material'
+import { MatNativeDateModule } from '@angular/material';
+import { FinishDialogComponent } from './finish-dialog/finish-dialog.component'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FinishDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -33,9 +36,11 @@ import { MatNativeDateModule } from '@angular/material'
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [FinishDialogComponent]
 })
 export class AppModule { }

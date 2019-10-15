@@ -1,5 +1,7 @@
 import { Component,OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { FinishDialogComponent } from './finish-dialog/finish-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +10,12 @@ import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from
 })
 export class AppComponent implements OnInit {
   ngOnInit() {
+  }
+  constructor(public dialog: MatDialog){
+
+  }
+  openDialog = () => {
+    const nesto = this.dialog.open(FinishDialogComponent);
   }
   year = new Date().getFullYear();
   registration = new FormGroup({
@@ -35,7 +43,10 @@ export class AppComponent implements OnInit {
   });
   onSubmit = () => {
     console.log(this.registration.value);
-    this.registration.get('0').errors
+    this.openDialog();
+    setTimeout(()=> {
+      this.dialog.closeAll();
+    },3000);
   }
   checkPassword(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
